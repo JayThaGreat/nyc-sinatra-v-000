@@ -15,6 +15,10 @@ Line below may be incorrect. May have to show the last landmark created.
   <br></br>
   <label>Landmark: </label>
   <input type="text" name="figure[landmark][name]" id="new_landmark">
+  <%@figure.landmarks.each do |landmark|%>
+  <input type="checkbox" name="figure[landmarks][name]" id="<%= landmark.name%>" value="<%=landmark.name%>" <%= 'checked' if @figure.landmarks.include?(landmark) %>><%=landmark.name%></input>
+  <%end%>
+
   <br></br>
   <%@figure.titles.each do |title|%>
   <input type="checkbox" name="figure[titles][name]" id="<%= title.name%>" value="<%=title.name%>" <%= 'checked' if @figure.titles.include?(title) %>><%=title.name%></input>
