@@ -13,14 +13,12 @@ class FiguresController < ApplicationController
 
   post '/figures' do
     #binding.pry
-    # May need to use find_or_create_by
-    @figure = Figure.find_or_create_by(name: params[:figure][:name])
-
-    @figure.titles << Title.find_or_create_by(id: params[:figure][:title_ids],name: params["title"]["name"])
-    @figure.landmarks << Landmark.find_or_create_by(id: params[:figure][:landmark_ids],name: params["landmark"]["name"])
+    @figure = Figure.find_or_create_by(figure: params[:figure])
+ 
+    @figure.titles << Title.find_or_create_by(id: params[:figure][:title_ids],name: params["title"])
+    @figure.landmarks << Landmark.find_or_create_by(id: params[:figure][:landmark_ids],name: params["landmark"])
+    
     #@figure.update(params)
-    Title.last.save
-    Landmark.last.save
     @figure.save
 
     redirect to "figures/#{@figure.id}"
@@ -42,6 +40,7 @@ class FiguresController < ApplicationController
   post '/figures/:id' do
     #binding.pry
     @figure = Figure.find_by_id(params[:id])
+    @figure.update(params[:figure])
 
     redirect to "figures/#{@figure.id}"
   end
