@@ -13,10 +13,10 @@ class FiguresController < ApplicationController
 
   post '/figures' do
     #binding.pry
-    @figure = Figure.find_or_create_by(figure: params[:figure])
+    @figure = Figure.find_or_create_by(name: params[:name])
  
-    @figure.titles << Title.find_or_create_by(id: params[:figure][:title_ids],name: params["title"])
-    @figure.landmarks << Landmark.find_or_create_by(id: params[:figure][:landmark_ids],name: params["landmark"])
+    @figure.titles << Title.find_or_create_by(id: params[:figure][:title_ids],name: params["title"]["name"])
+    @figure.landmarks << Landmark.find_or_create_by(id: params[:figure][:landmark_ids],name: params["landmark"]["name"])
     
     #@figure.update(params)
     @figure.save
