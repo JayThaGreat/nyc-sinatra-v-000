@@ -2,7 +2,7 @@
 
 <h3><%=@figure.name%></h3>
 
-Line below may be incorrect. May have to show the last landmark created.
+
 <h3><%=@figure.landmarks.first%></h3>
 
 
@@ -10,18 +10,37 @@ Line below may be incorrect. May have to show the last landmark created.
   <label>Name: </label>
   <input type="text" name="figure[name]" id="figure_name">
   <br></br>
-  
+  <label>Title ID: </label>
+  <input type="text" name="figure[title_ids][]" id="title_ids">
   <br></br>
   <label>Landmark: </label>
   <input type="text" name="figure[landmark][name]" id="new_landmark">
+  <br></br>
+  <label>Landmark ID: </label>
+  <input type="text" name="figure[landmark_ids][]" id="landmark_ids">
 
-  <%@figure.landmarks.each do |landmark|%>
-  <input type="checkbox" name="landmarks[name]" id="<%= landmark.name%>" value="title_#{title.id}" <%= 'checked' if @figure.landmarks.include?(landmark) %>><%=landmark.name%></input>
+<!-- 
+  <%Landmark.all.uniq do |landmark|%>
+  <input type="checkbox" name="landmarks[name]" id="landmark_<%= landmark.id%>" value="<%= landmark.id%>" <%= 'checked' if Landmark.all.uniq.include?(landmark) %>>landmark_<%=landmark.id%></input>
+  <%end%>
+ -->
+
+  <%Landmark.all.uniq.each do |landmark|%>
+   <input 
+          type="checkbox" 
+          name="figure[landmark_ids][]" 
+          id="landmark_<%= landmark.id%>" 
+          value="<%= landmark.id%>"
+          > <%= landmark.name%> 
+    </input>
   <%end%>
 
   <br></br>
-  <%@figure.titles.each do |title|%>
-  <input type="checkbox" name="titles[name]" id="<%= title.name%>" value="title_#{title.id}" <%= 'checked' if @figure.titles.include?(title) %>><%=title.name%></input>
+  <%Title.all.uniq.each do |title|%>
+  <input  type="checkbox" 
+          name="figure[title_ids][]"
+          id="title_<%= title.id%>" 
+          value="<%= title.id%>"><%=title.name%></input>
   <%end%>
   <input type="submit" value="Edit Figure">
 </form>

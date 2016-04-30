@@ -32,6 +32,7 @@ class FiguresController < ApplicationController
   end
 
   get '/figures/:id' do
+    #binding.pry
     @figure = Figure.find_by_id(params[:id])
 
     erb :'/figures/show'
@@ -40,7 +41,12 @@ class FiguresController < ApplicationController
   post '/figures/:id' do
     #binding.pry
     @figure = Figure.find_by_id(params[:id])
-    @figure.update(params[:figure])
+    #@title = Title.find_by_id(params[:id])
+    @figure.title_ids = Title.find_by_id(params[:id]).id
+    #@figure.landmarks = Landmark.find_by_id(@figure.id)
+
+
+    #@figure.update(params[:figure])
 
     redirect to "figures/#{@figure.id}"
   end
