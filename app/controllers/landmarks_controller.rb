@@ -12,15 +12,7 @@ class LandmarksController < ApplicationController
   end
 
   post '/landmarks' do
-    #binding.pry
-    # May need to use find_or_create_by
-    @landmark = Landmark.create(params[:landmark])
-    #binding.pry
-    @landmark.titles << Title.create(params[:title])
-    @landmark.landmarks << Landmark.create(params[:landmark])
-    Title.all.last.save
-    Landmark.all.last.save
-    @landmark.save
+    @landmark = Landmark.find_or_create_by(params[:landmark])
 
     redirect to "landmarks/#{@landmark.id}"
   end
@@ -32,7 +24,6 @@ class LandmarksController < ApplicationController
   end
 
   get '/landmarks/:id' do
-    #binding.pry
     @landmark = Landmark.find_by_id(params[:id])
 
     erb :'/landmarks/show'
@@ -40,6 +31,7 @@ class LandmarksController < ApplicationController
 
   post '/landmarks/:id' do
     @landmark = Landmark.find_by_id(params[:id])
+    @landmark.update(year_completed: params[:landmark][:year_completed],name: params[:landmark][:name])
 
     redirect to "figures/#{@figure.id}"
   end

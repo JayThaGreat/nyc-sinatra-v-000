@@ -1,3 +1,9 @@
 <h1>Check out the following figure: </h1>
 
 <%= @figure.name%>
+<% @figure.landmarks.uniq.each do |landmark|%>
+  <%= landmark%>
+  <%= landmark.name%>
+  <%= landmark.year_completed%>
+<%end%>
+<%= @figure.titles%>
